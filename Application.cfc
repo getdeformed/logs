@@ -16,6 +16,13 @@ component extends="org.corfield.framework" {
 		logSQL = true, // SQL queries are logged to the console 
 		cfclocation = "model" // Specifies the directory(or multiple off) to search for persistent CFCs to generate the mappings 
 	}; 
-
+	
+	function setupApplication(){
+		var beanFactory = new ioc("/gateway");
+		setBeanFactory(beanFactory);
+		application.beanFactory = beanFactory;
+		
+		application.weatherApiKey = "52ab287379302d7c";
+	}
 
 }
