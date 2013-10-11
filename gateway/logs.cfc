@@ -5,6 +5,11 @@
 		}
 		
 		function getObeservationsForDate(dateParam){
+			var maxObDate = ormExecutequery("select max(date) from observed_conditions",{},true);
+			//writeDump(dateDiff("n",maxObDate,now()));
+			if(dateDiff("n",maxObDate,now()) < 70 && len(dateParam)){
+				return dateDiff("n",maxObDate,now());
+			}
 			var apiKey = application.weatherApiKey;
 			var http = new http();
 			var dateMask = "yyyymmdd";

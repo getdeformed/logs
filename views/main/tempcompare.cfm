@@ -1,4 +1,6 @@
 <cfscript>
+	logs = application.beanFactory.getBean("logs");
+	observations = logs.getObeservationsForDate(now());
 	fromDate = dateAdd("d",-1,now());
 	toDate = now();
 	query = " from observed_conditions where date >= :fromDate and date <= :toDate order by date";
@@ -20,9 +22,12 @@
 </cfscript>
 <!--- <cfdump var="#indoorResultsQuery#">
 <cfdump var="#outdoorResultsQuery#"> --->
-<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="500" chartwidth="1000">
-	<cfchartseries type="line" query="outdoorResultsQuery" itemcolumn="date" valuecolumn="tempi" />
+<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="300" chartwidth="1000" showmarkers="false">
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="temperature" />
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="set_point" />
 	
 </cfchart>
+<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="300" chartwidth="1000">
+	<cfchartseries type="line" query="outdoorResultsQuery" itemcolumn="date" valuecolumn="tempi" />
+</cfchart>
+<cfdump var="#observations#">
