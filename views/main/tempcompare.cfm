@@ -3,7 +3,7 @@
 	observations = logs.getObeservationsForDate(now());
 	fromDate = dateAdd("d",-1,now());
 	toDate = now();
-	query = " from observed_conditions where date >= :fromDate and date <= :toDate order by date";
+	query = " from observed_conditions where date >= :fromDate and date <= :toDate and metar like 'METAR%' order by date";
 	results = ormExecutequery(query,{fromDate=fromDate,toDate=toDate});
 	outdoorResultsQuery = entityToquery(results);
 	query = " from indoor_temp where created >= :fromDate and created < :toDate and temperature <> -1 order by created";
@@ -22,12 +22,12 @@
 </cfscript>
 <!--- <cfdump var="#indoorResultsQuery#">
 <cfdump var="#outdoorResultsQuery#"> --->
-<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="300" chartwidth="1000" showmarkers="false">
+<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="400" chartwidth="1700" showmarkers="true" scaleFrom="55">
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="temperature" />
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="set_point" />
 	
 </cfchart>
-<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="300" chartwidth="1000">
+<cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="400" chartwidth="1700">
 	<cfchartseries type="line" query="outdoorResultsQuery" itemcolumn="date" valuecolumn="tempi" />
 </cfchart>
 <cfdump var="#observations#">
