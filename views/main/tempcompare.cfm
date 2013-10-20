@@ -23,7 +23,7 @@
 </cfquery>
 <!--- <cfdump var="#indoorResultsQuery#">
 <cfdump var="#outdoorResultsQuery#"> --->
-<cfdump var="#results#">
+<!--- <cfdump var="#results#"> --->
 <cfchart yaxistitle="temp" xaxistitle="date/time" chartheight="450" chartwidth="1700" showmarkers="true" scaleFrom="55">
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="temperature" />
 	<cfchartseries type="line" query="indoorResultsQuery" itemcolumn="created" valuecolumn="set_point" />
