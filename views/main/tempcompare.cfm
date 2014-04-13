@@ -11,7 +11,7 @@
 	indoorResultsQuery = entityToquery(results);
 </cfscript>
 <cfquery name="results">
-	select distinct on (oc.id) oc.id,oc.date, tempi, it.id,it.temperature, it.set_point, it.created, 
+	select distinct on (oc.date) oc.id,oc.date, tempi, it.id,it.temperature, it.set_point, it.created, 
 	floor(least(
 	(select min(oc2.tempi) from observed_conditions oc2 where oc2.metar not ilike 'spec%' and oc2.date >= <cfqueryparam value="#fromDate#" cfsqltype="cf_sql_timestamp"> and oc2.date <= <cfqueryparam value="#toDate#" cfsqltype="cf_sql_timestamp"> ),
 	(select min(it2.temperature) from indoor_temp it2 where it2.temperature <> -1 and it2.created >= <cfqueryparam value="#fromDate#" cfsqltype="cf_sql_timestamp"> and it2.created <= <cfqueryparam value="#toDate#" cfsqltype="cf_sql_timestamp">)
@@ -19,7 +19,7 @@
 		from observed_conditions oc left join indoor_temp it on it.created >= oc.date and it.temperature <> -1
 		where oc.metar not ilike 'spec%' 
 		and oc.date >= <cfqueryparam value="#fromDate#" cfsqltype="cf_sql_timestamp"> and oc.date <= <cfqueryparam value="#toDate#" cfsqltype="cf_sql_timestamp">
-		order by oc.id asc
+		order by oc.date asc
 </cfquery>
 <!--- <cfdump var="#indoorResultsQuery#">
 <cfdump var="#outdoorResultsQuery#"> --->
